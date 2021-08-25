@@ -35,7 +35,8 @@ xm = random.randint(0, 610)
 ym = random.randint(0, 450)
 
 fonte = pygame.font.SysFont('arial',40,bold=True,italic=True)#fonte de texto
-spd = 32 #velocidade objeto
+spd_inicial = 20
+spd = spd_inicial #velocidade objeto
 pontos = 1
 
 lista_corpo = []
@@ -57,7 +58,7 @@ def cresce(lista_corpo):
 
 #loop principal
 while True:
-    relogio.tick(8) #frames per second
+    relogio.tick(int(260/spd_inicial)) #frames per second
     scr.fill((250,250,250)) #clear screen
     mensagem = f'Pontos: {pontos-1}'
     texto = fonte.render(mensagem, True, (0,0,0)) #configurar texto
@@ -71,11 +72,12 @@ while True:
             xobj = int(width/2)
             yobj = int(height/2)
             pontos = 1
-            spd = 32
+            spd = spd_inicial
             right = True
             left = False
             up = False
             down = False
+            lista_corpo = []
         
     #move object
     if pygame.key.get_pressed()[K_a] and right==False:
@@ -133,7 +135,7 @@ while True:
     corpo = cresce(lista_corpo)
 
     #Limitar o tamanho do corpo da cobra
-    if len(lista_corpo) > 1 * pontos:
+    if len(lista_corpo) > int(35/spd_inicial * pontos):
         lista_corpo.pop(0)
 
     #limites da tela
