@@ -54,7 +54,7 @@ relogio = pygame.time.Clock()
 #fazer a cobra crescer
 def cresce(lista_corpo):
     for pos in lista_corpo:
-        corpo = pygame.draw.rect(scr,(0,255,0),(pos[0],pos[1],30,30))
+        pygame.draw.rect(scr,(0,255,0),(pos[0],pos[1],30,30))
 
 #loop principal
 while True:
@@ -96,7 +96,32 @@ while True:
         right = False
         left = False
         down = True
+
+    #reset registro de recordes
+    if pygame.key.get_pressed()[K_0]:
+        conteudo = ''
+        arquivo = open('Best.txt', 'w')
+        arquivo.writelines(conteudo)
+        arquivo.close()
     
+    #registro de recordes
+    arquivo = open('Best.txt', 'r')
+    conteudo = arquivo.readline()
+    if  conteudo!='':
+        conteudo = int(conteudo)
+    else:
+        conteudo = 0
+    novo_valor = pontos-1
+
+    #imprime recorde na tela
+    Best = f'Recorde: {conteudo}'
+    recorde = fonte.render(Best, True, (0,0,0))
+
+    #salva recorde no .txt
+    if novo_valor > conteudo:
+        arquivo = open('Best.txt', 'w')
+        arquivo.writelines(str(novo_valor))
+        arquivo.close()
 
     #move automatically
     if right:
@@ -135,7 +160,7 @@ while True:
     cresce(lista_corpo)
 
     #Limitar o tamanho do corpo da cobra
-    if len(lista_corpo) > int(35/spd_inicial * pontos):
+    if len(lista_corpo) > int(50/spd_inicial * pontos):
         lista_corpo.pop(0)
 
     #limites da tela
@@ -150,6 +175,7 @@ while True:
 
     #imprimir pontuação na tela
     scr.blit(texto, (450, 40))
+    scr.blit(recorde, (450, 80))
 
     #atualizar tela 
     pygame.display.update()
