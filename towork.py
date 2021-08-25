@@ -132,7 +132,7 @@ while True:
     lista_cabeca.append(xobj)
     lista_cabeca.append(yobj)
     lista_corpo.append(lista_cabeca)
-    corpo = cresce(lista_corpo)
+    cresce(lista_corpo)
 
     #Limitar o tamanho do corpo da cobra
     if len(lista_corpo) > int(35/spd_inicial * pontos):
