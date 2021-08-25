@@ -48,7 +48,7 @@ down = False
 
 #configurar a tela
 scr = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Jogo") #Nome da tela
+pygame.display.set_caption("R para reiniciar/ 0 para zerar recorde") #Nome da tela
 relogio = pygame.time.Clock()
 
 #fazer a cobra crescer
