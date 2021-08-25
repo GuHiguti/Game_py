@@ -14,12 +14,17 @@ height = 480
 xobj = width/2
 yobj = height/2
 
-xb = random.randint(0, 610)
-yb = random.randint(0, 450)
+xm = random.randint(0, 610)
+ym = random.randint(0, 450)
 
 fonte = pygame.font.SysFont('arial',40,bold=True,italic=True)#fonte de texto
 spd = 5 #velocidade objeto
 pontos = 0
+
+right = True
+left = False
+up = False
+down = False
 
 #configurar a tela
 scr = pygame.display.set_mode((width, height))
@@ -41,23 +46,46 @@ while True:
 
     #move object
     if pygame.key.get_pressed()[K_a]:
-        xobj -= spd
+        right = False
+        up = False
+        down = False
+        left = True
     if pygame.key.get_pressed()[K_d]:
-        xobj += spd
+        left = False
+        up = False
+        down = False
+        right = True
     if pygame.key.get_pressed()[K_w]:
-        yobj -= spd
+        right = False
+        left = False
+        down = False
+        up = True
     if pygame.key.get_pressed()[K_s]:
+        right = False
+        left = False
+        up = False
+        down = True
+
+    #move automatically
+    if right:
+        xobj += spd
+    elif left:
+        xobj -= spd
+    elif up:
+        yobj -= spd
+    elif down:
         yobj += spd
+
 
     #formas na tela
     ret_amarelo = pygame.draw.rect(scr, (255,205,0), (xobj,yobj,30,30)) #draw rectangle
-    ret_azul = pygame.draw.rect(scr,(0,0,255), (xb,yb,30,30))
+    ret_azul = pygame.draw.rect(scr,(0,0,255), (xm,ym,30,30))
 
     #configurar colisão
     if ret_amarelo.colliderect(ret_azul):
         print("colidiu")        
-        xb = random.randint(0, 610)
-        yb = random.randint(0, 450)
+        xm = random.randint(0, 610)
+        ym = random.randint(0, 450)
         pontos += 1
 
     #limites da tela
